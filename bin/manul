@@ -1,0 +1,21 @@
+#!/usr/local/bin/ruby
+
+require 'manul/server'
+require 'optparse'
+
+options = {}
+OptionParser.new do |opts|
+  opts.on "--host HOST", "Host HOST" do |host|
+    options[:host] = host
+  end
+
+  opts.on "--port PORT", "Port PORT" do |port|
+    options[:port] = port
+  end
+
+  opts.on "--path PATH", "Path  PATH" do |path|
+    options[:path] = path
+  end
+end.parse!
+
+Manul::Server.new options

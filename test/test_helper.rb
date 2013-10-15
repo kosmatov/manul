@@ -1,0 +1,12 @@
+require 'coveralls'
+Coveralls.wear! do
+  add_filter '/test/'
+end
+
+require 'minitest/autorun'
+
+require 'bundler/setup'
+
+require 'manul'
+
+Bundler.require
