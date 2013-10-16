@@ -1,22 +1,35 @@
-require 'eventmachine'
-require 'manul/connection'
-
 module Manul
   class Server
-    attr_accessor :em_signature, :host, :path, :port
-
     def initialize(options)
-      @host = options[:host] || 'localhost'
+      @connections = []
+      @host = options[:host] || '127.0.0.1'
       @port = options[:port]
       @path = options[:path]
     end
 
     def start
-      @em_signature = EventMachine.start_server @host, @port, Connection
+      EventMachine.run do
+        @em_signature = EventMachine.start_server @host, @port, Connection, &method(:init_connection)
+      end
     end
 
     def stop
       EventMachine.stop_server @em_signature
+      @connections.each(&:close)
+      EventMachine.stop
     end
+
+    def close_connection(connection)
+      @connections.reject! { |c| c == connection }
+    end
+
+    protected
+
+    def init_connection(connection)
+      connection.app = App.new path: @path
+      connection.server = self
+      @connections << connection
+    end
+      
   end
 end
