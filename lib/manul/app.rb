@@ -10,6 +10,8 @@ module Manul
     end
 
     def process(env)
+      check_request_method env[:method]
+
       filepath = File.join @path, env[:filepath]
       filepath = File.realpath filepath
 
@@ -33,5 +35,9 @@ module Manul
       ]
     end
 
+    def check_request_method(method)
+      return if method.upcase == 'GET'
+      raise Net::HTTPBadRequest
+    end
   end
 end
