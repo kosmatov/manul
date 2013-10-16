@@ -5,12 +5,9 @@ class ConnectionTest < Minitest::Test
     @connection = Manul::Connection.new mock('EM')
     EventMachine.stubs(:send_data)
 
-    path = File.expand_path File.dirname(__FILE__), '..'
-    path = File.join path, '/fixtures'
-
-    server = Manul::Server.new path: path
+    server = Manul::Server.new path: '/tmp'
     @connection.server = server
-    @connection.app = Manul::App.new path: path
+    @connection.app = Manul::App.new path: '/tmp'
   end
 
   def test_receive_data
