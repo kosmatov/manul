@@ -1,6 +1,10 @@
+require 'eventmachine'
 require 'manul/version'
-require 'manul/server'
 
 module Manul
-  # Your code goes here...
+  autoload :Server, 'manul/server'
+  autoload :Connection, 'manul/connection'
+  autoload :App, 'manul/app'
+  autoload :Request, 'manul/request'
+  autoload :Response, 'manul/response'
 end
