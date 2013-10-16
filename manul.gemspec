@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Manul::VERSION
   spec.authors       = ["Konstantin Kosmatov"]
   spec.email         = ["key@kosmatov.ru"]
-  spec.description   = %q{Simple web server}
-  spec.summary       = %q{Simple web server}
+  spec.description   = %q{Simple http server}
+  spec.summary       = %q{Simple http server}
   spec.homepage      = ""
   spec.license       = "MIT"
 
