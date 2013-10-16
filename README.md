@@ -1,9 +1,9 @@
 # Manul
 
-Simple web server
+Simple HTTP server based on [EventMachine](https://github.com/eventmachine/eventmachine)
 
 ## Usage
 
 ```shell
-bin/manul --port=8080 --path=/tmp
+bundle exec bin/manul --port=8080 --path=/tmp
 
