@@ -1,6 +1,6 @@
-#!/usr/local/bin/ruby
+#!/home/vagrant/.rvm/rubies/ruby-2.0.0-p247/bin/ruby
 
-require 'manul/server'
+require 'manul'
 require 'optparse'
 
 options = {}
@@ -18,4 +18,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-Manul::Server.new options
+server = Manul::Server.new options
+p server.inspect
+server.start
