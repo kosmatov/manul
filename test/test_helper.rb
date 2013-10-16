@@ -4,9 +4,9 @@ Coveralls.wear! do
 end
 
 require 'minitest/autorun'
-
 require 'bundler/setup'
-
 require 'manul'
 
 Bundler.require
+
+require 'mocha/setup'
