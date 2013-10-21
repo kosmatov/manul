@@ -1,5 +1,5 @@
 # Manul
-[![Build Status](https://travis-ci.org/kosmatov/manul.png)](https://travis-ci.org/kosmatov/manul)
+[![Build Status](https://travis-ci.org/kosmatov/manul.png?branch=master)](https://travis-ci.org/kosmatov/manul)
 [![Coverage Status](https://coveralls.io/repos/kosmatov/manul/badge.png?branch=master)](https://coveralls.io/r/kosmatov/manul)
 
 Simple HTTP server based on [EventMachine](https://github.com/eventmachine/eventmachine)
