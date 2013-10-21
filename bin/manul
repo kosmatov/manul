@@ -16,6 +16,10 @@ OptionParser.new do |opts|
   opts.on "--path PATH", "Path  PATH" do |path|
     options[:path] = path
   end
+
+  opts.on "--cgi PATH", "CGI PATH" do |path|
+    options[:cgi] = path
+  end
 end.parse!
 
 server = Manul::Server.new options
