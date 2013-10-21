@@ -5,19 +5,17 @@ class AppTest < Minitest::Test
     path = File.expand_path '..', File.dirname(__FILE__)
     @path = File.join path, '/fixtures'
 
+    @parser = Http::Parser.new
     @app = Manul::App.new path: @path
   end
 
   def test_ok
-    env = {
-      method: 'GET',
-      filepath: '/sample.txt'
-    }
+    @parser << "GET /sample.txt HTTP/1.1\r\n"
 
-    filename = File.join @path, env[:filepath]
+    filename = File.join @path, @parser.request_url
     file = File.open filename
 
-    status, headers, content = @app.call(env)
+    status, headers, content = @app.call(@parser)
 
     assert_equal 200, status
     assert_equal file.path, content.path
@@ -25,38 +23,18 @@ class AppTest < Minitest::Test
   end
 
   def test_not_found
-    env = {
-      method: 'get',
-      filepath: '/not_existence_file'
-    }
-
-    status, headers, content = @app.call(env)
+    @parser << "GET /not_existence.txt HTTP/1.1\r\n"
+    status, headers, content = @app.call(@parser)
 
     assert_equal 404, status
     assert content['Not']
     assert headers.any?
   end
 
-  def test_bad_request
-    env = {
-      method: 'bad',
-      filepath: '/sample.txt'
-    }
-
-    status, headers, content = @app.call(env)
-
-    assert_equal 400, status
-    assert content['Bad']
-    assert headers.any?
-  end
-
   def test_forbidden
-    env = {
-      method: 'get',
-      filepath: '../test_helper.rb'
-    }
+    @parser << "GET /../test_helper.rb HTTP/1.1\r\n"
 
-    status, headers, content = @app.call(env)
+    status, headers, content = @app.call(@parser)
 
     assert_equal 403, status
     assert content['Forbidden']

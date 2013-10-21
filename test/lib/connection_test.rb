@@ -14,4 +14,9 @@ class ConnectionTest < Minitest::Test
     request_data = 'GET /sample.txt'
     @connection.receive_data request_data
   end
+
+  def test_head_request
+    request_data = 'HEAD /sample.txt'
+    @connection.receive_data request_data
+  end
 end

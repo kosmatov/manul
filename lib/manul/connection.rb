@@ -3,31 +3,36 @@ module Manul
     attr_accessor :server, :app
 
     def post_init
-      @request = Request.new
-      @response = Response.new
+      @parser = Http::Parser.new
     end
 
     def receive_data(data)
-      @request.parse(data)
+      @parser << data
       post_process pre_process
+    rescue
     end
 
     def pre_process
-      @app.call @request.env
+      @app.call @parser
     end
 
     def post_process(result)
-      @response.status, @response.headers, @response.body = *result
-      @response.each do |chunk|
+      send_data @parser.headers
+      @parser.on_body = proc do |chunk|
         send_data chunk
-      end
+      end unless head_method?
     ensure
       close
     end
 
     def close
-      @response.close
       @server.close_connection self
+    end
+
+    private
+
+    def head_method?
+      @parser.http_method == 'HEAD'
     end
   end
 end

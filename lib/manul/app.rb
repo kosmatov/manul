@@ -4,15 +4,13 @@ module Manul
       @path = options[:path]
     end
 
-    def call(env)
-      process env
+    def call(request)
+      process request
       [@status, @headers, @content]
     end
 
-    def process(env)
-      check_request_method env[:method]
-
-      filepath = File.join @path, env[:filepath]
+    def process(request)
+      filepath = File.join @path, request.request_url
       filepath = File.realpath filepath
 
       if filepath[@path]
@@ -25,9 +23,6 @@ module Manul
     rescue Errno::ENOENT => e
       @content = "404 Not Found\n"
       @status = 404
-    rescue Exception => e
-      @content = "400 Bad Request\n"
-      @status = 400
     ensure
       length = @content.is_a?(String) ? @content.length : @content.stat.size
       @headers = [
@@ -35,9 +30,5 @@ module Manul
       ]
     end
 
-    def check_request_method(method)
-      return if method.upcase == 'GET'
-      raise Net::HTTPBadRequest
-    end
   end
 end
