@@ -13,12 +13,16 @@ OptionParser.new do |opts|
     options[:port] = port
   end
 
-  opts.on "--path PATH", "Path  PATH" do |path|
+  opts.on "--path PATH", "Path PATH" do |path|
     options[:path] = path
   end
 
-  opts.on "--cgi PATH", "CGI PATH" do |path|
-    options[:cgi] = path
+  opts.on "--cgi_path PATH", "CGI PATH" do |path|
+    options[:cgi_path] = path
+  end
+
+  opts.on "--cgi_alias PATH", "CGI alias PATH" do |path|
+    options[:cgi_alias] = path
   end
 end.parse!
 
