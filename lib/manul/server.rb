@@ -5,7 +5,8 @@ module Manul
       @host = options[:host] || '127.0.0.1'
       @port = options[:port]
       @path = options[:path]
-      @cgi = options[:cgi]
+      @cgi_path = options[:cgi_path]
+      @cgi_alias = options[:cgi_alias]
     end
 
     def start
@@ -27,7 +28,7 @@ module Manul
     protected
 
     def init_connection(connection)
-      connection.app = App.new path: @path, cgi: @cgi
+      connection.app = App.new path: @path, cgi_path: @cgi_path, cgi_alias: @cgi_alias
       connection.server = self
       @connections << connection
     end
